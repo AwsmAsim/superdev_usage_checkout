@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SuperdeV</title>
+    <script>
+    function postData() {
+        // Get the value of the input field
+        var license_key = document.getElementById("license_key").value;
+
+        // Create a new fetch request
+        var request = new Request("https://abdullah-bhai-wala-project-awsmasim.vercel.app/api/checkout?license_key="+license_key, {
+            method: "GET",
+            mode: 'no-cors',
+        });
+
+        // Send the request
+        // Send the request
+        fetch(request)
+            .then(function(response) {
+                console.log(response)
+                return response.json();
+            })
+            .then(function(data) {
+                console.log("Success:", data);
+                if(data.sucess){
+                    // store the response in a global variable
+                    window.responseData = data;
+                    // navigate to the new page
+                    window.location.href = "details.html";
+                }else{
+                    var x = document.getElementById("snackbar");
+                    x.className = "show";
+                    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+                }
+            })
+            .catch(function(error) {
+                console.log("Error:", error);
+            });
+    }
+
+    </script>
+    <style>
+      /* Set background color to black */
+      body {
+        background-color: black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+      /* Center the title */
+      h1 {
+        text-align: center;
+        color: white;
+      }
+      /* Style the input field with rounded corners */
+      input[type="text"] {
+        border-radius: 20px;
+        padding: 10px;
+        width: 200px;
+        text-align: center;
+      }
+      /* Style the button */
+      button {
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border-radius: 20px;
+        border: none;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h1>SuperdeV</h1>
+      <input type="text" id="license_key" placeholder="Enter License Key"><br>
+      <button onclick="postData()">Submit</button>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Details</title>
+    <style>
+      /* Set background color to white */
+      body {
+        background-color: white;
+        padding: 20px;
+      }
+      /* Style the email */
+      h2 {
+        margin-bottom: 10px;
+      }
+      /* Style the platform details */
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      li {
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2 id="email"></h2>
+    <ul id="platforms"></ul>
+    <script>
+        var response = window.responseData;
+        // check the response if it is sucess
+        if(response.sucess){
+            // get the email element
+            var email = document.getElementById("email");
+            // set the email value
+            email.innerHTML = response.email;
+
+            // get the platforms element
+            var platforms = document.getElementById("platforms");
+
+            for(var i=0; i< response.platforms.length; i++){
+                var li = document.createElement("li");
+                li.innerHTML = "platform_id: "+ response.platforms[i].platform_id + " timestamp: " + response.platforms[i].timestamp;
+                platforms.appendChild(li);
+            }
+        }else{
+            // if sucess is false
+            var x = document.getElementById("snackbar");
+            x.className = "show";
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+        }
+    </script>
+    <div id="snackbar" style="background-color: red; color: white; text-align: center; border-radius: 2px; padding: 16px; position: fixed; z-index: 1; left: 50%; transform: translateX(-50%); bottom: 30px;">Invalid License</div>
+  </body>
+</html>
